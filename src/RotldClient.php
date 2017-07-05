@@ -38,7 +38,7 @@ class RotldClient
             $this->result = $result;
             $this->result_code = $result->result_code;
             $this->result_message = $result->result_message;
-            $this->result_iserror = boolval($result->error);
+            $this->result_iserror = (bool) $result->error;
             if ($result->error==1){
                 return False;
             }
