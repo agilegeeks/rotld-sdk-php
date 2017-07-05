@@ -207,6 +207,17 @@ class RotldTestCase extends PHPUnit\Framework\TestCase {
         $result = $this->client->info_contact($cid);
         $this->assertEquals($this->client->getResultCode(),'00200');
         $this->assertEquals($result->registrant_id,$cid);
+    }
+
+    public function test_info_domain() {
+        $result = $this->client->info_domain('adomainthatcertainlyshouldnotberegistedhaha.ro');
+        $this->assertFalse($result);
+        $this->assertEquals($this->client->getResultCode(),'10001');
+
+        $domain_name = $this->create_dummy_domain();
+        $result = $this->client->info_domain($domain_name);
+        $this->assertEquals($this->client->getResultCode(),'00200');
+        $this->assertEquals($result->domain_name, $domain_name);
 
         // echo $this->client->getResultCode()."  ".$this->client->getResultMessage();
         // var_dump($this->client->getResult());

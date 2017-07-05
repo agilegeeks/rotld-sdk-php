@@ -148,5 +148,17 @@ class RotldClient
         }
     }
 
+    public function info_domain($domain_name){
+        $params = array();
+        $params['command'] = 'domain-info';
+        $params['domain'] = $domain_name;
+        $this->set_params($params);
+        if ($this->commit()){
+            return $this->result->data;
+        }else{
+            return False;
+        }
+    }
+
 
 }
