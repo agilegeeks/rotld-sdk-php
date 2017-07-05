@@ -1,0 +1,21 @@
+{
+    "name": "agilegeeks/rotld-sdk-php",
+    "license": "MIT",
+    "type": "library",
+    "description": "ROTLD rest client",
+    "authors": [
+        {
+            "name": "Radu Boncea",
+            "email": "radu.boncea@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^4.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "AgileGeeks\\Rotld\\": "src"
+        }
+    },
+    "minimum-stability": "stable"
+}
