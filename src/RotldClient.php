@@ -160,5 +160,18 @@ class RotldClient
         }
     }
 
+    public function renew_domain($domain_name, $period){
+        $params = array();
+        $params['command'] = 'domain-renew';
+        $params['domain'] = $domain_name;
+        $params['domain_period'] = $period;
+        $this->set_params($params);
+        if ($this->commit()){
+            return $this->result->data;
+        }else{
+            return False;
+        }
+    }
+
 
 }
