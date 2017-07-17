@@ -174,4 +174,17 @@ class RotldClient
     }
 
 
+    public function activate_domain($domain_name){
+        $params = array();
+        $params['command'] = 'domain-activate';
+        $params['domain'] = $domain_name;
+        $this->set_params($params);
+        if ($this->commit()){
+            return $this->result->data;
+        }else{
+            return False;
+        }
+    }
+
+
 }

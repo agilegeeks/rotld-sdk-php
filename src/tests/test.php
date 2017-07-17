@@ -172,6 +172,24 @@ class RotldTestCase extends PHPUnit\Framework\TestCase {
         $this->assertEquals($this->client->getResultCode(),'00200');
 
     }
+
+    public function test_activate_domain() {
+        $cid = $this->create_dummy_registrant();
+        $domain_name = 'test-'.$this->randomstring(50).'.ro';
+
+        $result = $this->client->reserve_domain(
+            $domain_name = $domain_name,
+            $domain_period = 1,
+            $registrant_cid = $cid,
+            $domain_password = 'G0odPasswd21#'
+        );
+        $this->assertEquals($result->registrant_id, $cid);
+        $this->assertEquals($this->client->getResultCode(),'00200');
+
+        $result = $this->client->activate_domain($domain_name);
+        $this->assertEquals($this->client->getResultCode(),'00200');
+
+    }
     public function test_check_availability() {
         $result = $this->client->check_availability('adomainthatcertainlyshouldnotberegistedhaha.ro');
         $this->assertEquals($this->client->getResultCode(),'00200');
