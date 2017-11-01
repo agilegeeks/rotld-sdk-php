@@ -235,7 +235,7 @@ class RotldTestCase extends PHPUnit\Framework\TestCase {
         $domain_name = $this->create_dummy_domain();
         $result = $this->client->info_domain($domain_name);
         $this->assertEquals($this->client->getResultCode(),'00200');
-        $this->assertEquals($result->domain_name, $domain_name);
+        $this->assertEquals($result->domain, $domain_name);
 
         // echo $this->client->getResultCode()."  ".$this->client->getResultMessage();
         // var_dump($this->client->getResult());
