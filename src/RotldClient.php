@@ -1,12 +1,10 @@
 <?php
 namespace AgileGeeks\Rotld;
 
-class RotldClient
-{
+class RotldClient {
     protected $result;
     protected $result_message;
     protected $result_code;
-
     protected $client;
 
     public function __construct($regid, $password, $apiurl, $lang='en', $format='json')
@@ -22,12 +20,8 @@ class RotldClient
         );
     }
 
-    public function getClient()
+    private function commit()
     {
-        return $this->client;
-    }
-
-    private function commit(){
         $this->result = null;
         $this->result_code = null;
         $this->result_message = null;
@@ -48,27 +42,46 @@ class RotldClient
         }
     }
 
-
-    private function set_params($params=array()){
+    private function set_params($params=array())
+    {
         foreach($params as $parameter=>$value){
             $this->client->set_param($parameter,$value);
     	}
     }
 
-    public function getResult(){
+    private function _register_domain($params=array())
+    {
+        $params['command'] = 'domain-register';
+        $this->set_params($params);
+        if ($this->commit()){
+            return $this->result->data;
+        }else{
+            return False;
+        }
+    }
+
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    public function getResult()
+    {
         return $this->result;
     }
 
-    public function getResultMessage(){
+    public function getResultMessage()
+    {
         return $this->result_message;
     }
 
-    public function getResultCode(){
+    public function getResultCode()
+    {
         return $this->result_code;
     }
 
-
-    public function create_contact($contact_data){
+    public function create_contact($contact_data)
+    {
         $params = array();
         $params['command'] = 'contact-create';
         $this->set_params(array_merge($params,$contact_data));
@@ -80,17 +93,21 @@ class RotldClient
         }
     }
 
-    private function _register_domain($params=array()){
-        $params['command'] = 'domain-register';
-        $this->set_params($params);
-        if ($this->commit()){
-            return $this->result->data;
-        }else{
+    public function contact_update($contact_data)
+    {
+        $params = array();
+        $params['command'] = 'contact-update';
+        $this->set_params(array_merge($params, $contact_data));
+
+        if ($this->commit()) {
+            return True;
+        } else {
             return False;
         }
     }
 
-    public function register_domain($domain_name, $domain_period, $registrant_cid, $domain_password){
+    public function register_domain($domain_name, $domain_period, $registrant_cid, $domain_password)
+    {
         $params = array();
         $params['domain'] = $domain_name;
         $params['domain_period'] = $domain_period;
@@ -100,7 +117,8 @@ class RotldClient
         return $this->_register_domain($params);
     }
 
-    public function reserve_domain($domain_name, $domain_period, $registrant_cid, $domain_password){
+    public function reserve_domain($domain_name, $domain_period, $registrant_cid, $domain_password)
+    {
         $params = array();
         $params['command'] = 'domain-register';
         $params['domain'] = $domain_name;
@@ -123,7 +141,8 @@ class RotldClient
         }
     }
 
-    public function reset_nameservers($domain_name, $nameservers=array()){
+    public function reset_nameservers($domain_name, $nameservers=array())
+    {
         $params = array();
         $params['command'] = 'domain-reset-ns';
         $params['domain'] = $domain_name;
@@ -136,7 +155,8 @@ class RotldClient
         }
     }
 
-    public function info_contact($cid){
+    public function info_contact($cid)
+    {
         $params = array();
         $params['command'] = 'contact-info';
         $params['cid'] = $cid;
@@ -148,7 +168,8 @@ class RotldClient
         }
     }
 
-    public function info_domain($domain_name){
+    public function info_domain($domain_name)
+    {
         $params = array();
         $params['command'] = 'domain-info';
         $params['domain'] = $domain_name;
@@ -160,7 +181,8 @@ class RotldClient
         }
     }
 
-    public function renew_domain($domain_name, $period){
+    public function renew_domain($domain_name, $period)
+    {
         $params = array();
         $params['command'] = 'domain-renew';
         $params['domain'] = $domain_name;
@@ -173,8 +195,8 @@ class RotldClient
         }
     }
 
-
-    public function activate_domain($domain_name){
+    public function activate_domain($domain_name)
+    {
         $params = array();
         $params['command'] = 'domain-activate';
         $params['domain'] = $domain_name;
@@ -185,6 +207,4 @@ class RotldClient
             return False;
         }
     }
-
-
 }

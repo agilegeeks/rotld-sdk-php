@@ -21,7 +21,6 @@ class RotldTestCase extends PHPUnit\Framework\TestCase {
 
     }
 
-
     protected function randomstring($length) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
         $charactersLength = strlen($characters);
@@ -240,6 +239,25 @@ class RotldTestCase extends PHPUnit\Framework\TestCase {
         // echo $this->client->getResultCode()."  ".$this->client->getResultMessage();
         // var_dump($this->client->getResult());
 
+    }
+
+    public function test_contact_update() {
+        $cid = $this->create_dummy_registrant();
+        $registrant_data['address1'] = 'Test Street nr.12';
+        $registrant_data['cid'] = $cid;
+        $domain_name = 'test-'.$this->randomstring(50).'.ro';
+        $result = $this->client->register_domain(
+            $domain_name = $domain_name,
+            $domain_period = 1,
+            $registrant_cid = $cid,
+            $domain_password = 'G0odPasswd21#'
+        );
+
+        $result = $this->client->contact_update($registrant_data);
+        $this->assertEquals($this->client->getResultCode(),'00200');
+
+        $result = $this->client->info_contact($cid);
+        $this->assertEquals($result->address1, $registrant_data['address1']);
     }
 
 }
