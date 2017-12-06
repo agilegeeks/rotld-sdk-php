@@ -207,4 +207,20 @@ class RotldClient {
             return False;
         }
     }
+
+    public function transfer_domain($domain_name, $authorization_key)
+    {
+        $params = array();
+        $params['command'] = 'domain-transfer';
+        $params['domain'] = $domain_name;
+        $params['authorization_key'] = $authorization_key;
+
+        $this->set_params($params);
+
+        if ($this->commit()) {
+            return $this->result->data;
+        } else {
+            return false;
+        }
+    }
 }
