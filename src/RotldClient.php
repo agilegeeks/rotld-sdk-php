@@ -155,6 +155,54 @@ class RotldClient {
         }
     }
 
+    public function create_nameserver($nameserver, $ips)
+    {
+        $params = array();
+        $params['command'] = 'nameserver-create';
+        $params['nameserver'] = $nameserver;
+        $params['ips'] = $ips;
+        
+        $this->set_params($params);
+        
+        if ($this->commit()){
+            return $this->result->data;
+        }
+
+        return False;
+    }
+
+    public function update_nameserver($nameserver, $ips)
+    {
+        $params = array();
+        $params['command'] = 'nameserver-update';
+        $params['nameserver'] = $nameserver;
+        $params['ips'] = $ips;
+        
+        $this->set_params($params);
+        
+        if ($this->commit()){
+            return $this->result->data;
+        }
+
+        return False;
+    }
+
+    public function delete_nameserver($nameserver)
+    {
+        $params = array();
+        $params['command'] = 'nameserver-delete';
+        $params['nameserver'] = $nameserver;
+        $params['ips'] = $ips;
+        
+        $this->set_params($params);
+        
+        if ($this->commit()){
+            return $this->result->data;
+        }
+
+        return False;
+    }
+
     public function info_contact($cid)
     {
         $params = array();
