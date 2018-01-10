@@ -192,7 +192,6 @@ class RotldClient {
         $params = array();
         $params['command'] = 'nameserver-delete';
         $params['nameserver'] = $nameserver;
-        $params['ips'] = $ips;
         
         $this->set_params($params);
         
