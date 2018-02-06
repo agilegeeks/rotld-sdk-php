@@ -1,6 +1,9 @@
 <?php
 namespace AgileGeeks\Rotld;
 
+use Mockery\Exception;
+
+
 class RotldClient {
     protected $result;
     protected $result_message;
@@ -38,7 +41,7 @@ class RotldClient {
             }
             return True;
         }catch(\Exception $e){
-            throw new RotldApiException($e->getMessage());
+            throw new \Exception($e->getMessage());
         }
     }
 
