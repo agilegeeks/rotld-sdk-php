@@ -273,4 +273,51 @@ class RotldClient {
             return false;
         }
     }
+
+    public function trade_domain($domain_name, $authorization_key, $cid)
+    {
+        $params = array();
+        $params['command'] = 'domain-trade';
+        $params['domain'] = $domain_name;
+        $params['authorization_key'] = $authorization_key;
+        $params['c_registrant'] = $cid;
+
+        $this->set_params($params);
+
+        if ($this->commit()) {
+            return $this->result->data;
+        } else {
+            return false;
+        }
+    }
+
+    public function trade_info($tid)
+    {
+        $params = array();
+        $params['command'] = 'trade-info';
+        $params['tid'] = $tid;
+
+        $this->set_params($params);
+
+        if ($this->commit()) {
+            return $this->result->data;
+        } else {
+            return false;
+        }
+    }
+
+    public function trade_confirm($tid)
+    {
+        $params = array();
+        $params['command'] = 'trade-confirm';
+        $params['tid'] = $tid;
+
+        $this->set_params($params);
+
+        if ($this->commit()) {
+            return $this->result->data;
+        } else {
+            return false;
+        }
+    }
 }
