@@ -281,7 +281,7 @@ class RotldClient {
         $params['domain'] = $domain_name;
         $params['authorization_key'] = $authorization_key;
         $params['c_registrant'] = $cid;
-        $params['period'] = $period;
+        $params['domain_period'] = $period;
 
         $this->set_params($params);
 
