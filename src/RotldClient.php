@@ -274,13 +274,14 @@ class RotldClient {
         }
     }
 
-    public function trade_domain($domain_name, $authorization_key, $cid)
+    public function trade_domain($domain_name, $authorization_key, $cid, $period)
     {
         $params = array();
         $params['command'] = 'domain-trade';
         $params['domain'] = $domain_name;
         $params['authorization_key'] = $authorization_key;
         $params['c_registrant'] = $cid;
+        $params['period'] = $period;
 
         $this->set_params($params);
 
