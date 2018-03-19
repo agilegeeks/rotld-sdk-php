@@ -321,4 +321,18 @@ class RotldClient {
             return false;
         }
     }
+
+    public function check_balance()
+    {
+        $params = array();
+        $params['command'] = 'check-balance';
+
+        $this->set_params($params);
+
+        if ($this->commit()) {
+            return $this->result->data;
+        } else {
+            return false;
+        }
+    }
 }
