@@ -205,6 +205,21 @@ class RotldClient {
         return False;
     }
 
+    public function info_nameserver($nameserver)
+    {
+        $params = array();
+        $params['command'] = 'nameserver-info';
+        $params['nameserver'] = $nameserver;
+
+        $this->set_params($params);
+
+        if ($this->commit()) {
+            return $this->result->data;
+        }
+
+        return false;
+    }
+
     public function info_contact($cid)
     {
         $params = array();
