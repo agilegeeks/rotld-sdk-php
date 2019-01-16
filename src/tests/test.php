@@ -260,4 +260,43 @@ class RotldTestCase extends PHPUnit\Framework\TestCase {
         $this->assertEquals($result->address1, $registrant_data['address1']);
     }
 
+    public function test_set_dnssec_data() {
+        $ds_data = array(
+            'keytag' => '12345',
+            'alg' => '3',
+            'digest_type' => '1',
+            'digest' => 'd524641568295383535bb836401bb8b836401bb8'
+        );
+        $domain_name = $this->create_dummy_domain();
+
+        $nameservers = array('ns.x.com');
+        $this->client->reset_nameservers($domain_name, $nameservers);
+        $this->client->add_dnssec_data($domain_name, $ds_data);
+
+        $result = $this->client->info_domain($domain_name);
+
+        $this->assertEquals($this->client->getResultCode(), '00200');
+        $this->assertEquals($result->dsdata[0]->digest, $ds_data['digest']);
+    }
+
+    public function test_unset_dnssec_data()
+    {
+        $ds_data = array(
+            'keytag' => '12345',
+            'alg' => '3',
+            'digest_type' => '1',
+            'digest' => 'd524641568295383535bb836401bb8b836401bb8'
+        );
+        $domain_name = $this->create_dummy_domain();
+
+        $nameservers = array('ns.x.com');
+        $this->client->reset_nameservers($domain_name, $nameservers);
+        $this->client->add_dnssec_data($domain_name, $ds_data);
+        $this->client->remove_dnssec_data($domain_name);
+
+        $result = $this->client->info_domain($domain_name);
+
+        $this->assertEquals($this->client->getResultCode(), '00200');
+        $this->assertEquals(count($result->dsdata), 0);
+    }
 }

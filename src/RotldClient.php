@@ -350,4 +350,45 @@ class RotldClient {
             return false;
         }
     }
+
+    public function add_dnssec_data($domain, $ds_data)
+    {
+        $params = array();
+        $params['command'] = 'domain-dsdata-add';
+        $params['domain'] = $domain;
+        $params['keytag'] = $ds_data['keytag'];
+        $params['alg'] = $ds_data['alg'];
+        $params['digest_type'] = $ds_data['digest_type'];
+        $params['digest'] = $ds_data['digest'];
+
+        $this->set_params($params);
+
+        if ($this->commit()) {
+            return $this->result->data;
+        } else {
+            return false;
+        }
+    }
+
+    public function remove_dnssec_data($domain, $ds_data=null)
+    {
+        $params = array();
+        $params['command'] = 'domain-dsdata-remove';
+        $params['domain'] = $domain;
+
+        if ($ds_data) {
+            $params['keytag'] = $ds_data['keytag'];
+            $params['alg'] = $ds_data['alg'];
+            $params['digest_type'] = $ds_data['digest_type'];
+            $params['digest'] = $ds_data['digest'];
+        }
+
+        $this->set_params($params);
+
+        if ($this->commit()) {
+            return $this->result->data;
+        } else {
+            return false;
+        }
+    }
 }
